@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view)
         {
-            Snackbar.make(view, "Nie zapisano :P Obróæ telefon aby zapisaæ :wink:", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Zapisano, miÅ‚ego dnia :D", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -53,7 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    editor.putInt("stan" + Integer.toString(i), tab[i].getStan());
+                    if(tab[i] != null)
+                    {
+                        editor.putInt("stan" + Integer.toString(i), tab[i].getStan());
+                    }
                 }
             }
             editor.commit();
@@ -75,7 +78,10 @@ public class MainActivity extends AppCompatActivity {
         tab = new ButtonX[ilosc];
         for(int i = 0; i < ilosc; i++)
         {
-            tab[i] = createButton(i, settings.getInt("stan" + Integer.toString(i), 0), settings.getString("nazwa" + Integer.toString(i),"---"));
+            if(settings.contains("nazwa" + Integer.toString(i)))
+            {
+                tab[i] = createButton(i, settings.getInt("stan" + Integer.toString(i), 0), settings.getString("nazwa" + Integer.toString(i), "---"));
+            }
         }
     }
 
@@ -123,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    input.getText().toString();
+                    out = input.getText().toString();
 
                     SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor editor = settings.edit();
