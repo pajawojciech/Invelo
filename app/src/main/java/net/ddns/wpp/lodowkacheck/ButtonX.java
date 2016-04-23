@@ -9,15 +9,14 @@ import android.widget.Button;
  */
 public class ButtonX extends Button
 {
-    private int ID;
     private int stan;
 
-    ButtonX(Context c, int id, int _stan)
+    ButtonX(Context c, int _stan, String text)
     {
         super(c);
-        ID = id;
         setBackgroundColor(Color.LTGRAY);
         stan = _stan;
+        setText(text);
         update();
     }
 
@@ -40,11 +39,6 @@ public class ButtonX extends Button
             case 2:
                 this.setBackgroundColor(Color.GREEN);
         }
-    }
-
-    public int getId()
-    {
-        return ID;
     }
 
     public int getStan()
