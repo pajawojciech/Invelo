@@ -15,12 +15,16 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public String out;
     public static final String PREFS_NAME = "invelo";
     int ilosc;
-    ButtonX tab[];
+
+    List<ButtonX> listX;
+
     View.OnClickListener l = new View.OnClickListener()
     {
         @Override
@@ -44,15 +48,15 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt("ilosc", ilosc);
             for(int i = 0;i < ilosc; i++)
             {
-                if(i >= tab.length)
+                if(i >= listX.size())
                 {
                     editor.putInt("stan" + Integer.toString(i), 0);
                 }
                 else
                 {
-                    if(tab[i] != null)
+                    if(listX.get(i) != null)
                     {
-                        editor.putInt("stan" + Integer.toString(i), tab[i].getStan());
+                        editor.putInt("stan" + Integer.toString(i), listX.get(i).getStan());
                     }
                 }
             }
@@ -72,12 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         ilosc = settings.getInt("ilosc",0);
-        tab = new ButtonX[ilosc];
+
+        listX = new ArrayList<ButtonX>();
+
         for(int i = 0; i < ilosc; i++)
         {
             if(settings.contains("nazwa" + Integer.toString(i)))
             {
-                tab[i] = createButton(i, settings.getInt("stan" + Integer.toString(i), 0), settings.getString("nazwa" + Integer.toString(i), "---"));
+                ButtonX x = createButton(i, settings.getInt("stan" + Integer.toString(i), 0), settings.getString("nazwa" + Integer.toString(i), "---"));
+                listX.add(x);
             }
         }
     }
@@ -125,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("nazwa" + Integer.toString(ilosc), out );
                     editor.commit();
+
+                    ButtonX x = createButton(ilosc, 0, out );
+                    listX.add(x);
+
                     ilosc++;
                 }
             });
