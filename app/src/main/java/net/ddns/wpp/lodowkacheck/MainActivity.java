@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity
 				l.addView(x);
 			}
 		}
-
     }
 
 	private void zapiszDane()
@@ -155,6 +154,12 @@ public class MainActivity extends AppCompatActivity
 			{
 				listX.get(i).resetStan();
 			}
+			return true;
+		}
+		if(id == R.id.action_discard)
+		{
+			listX = wczytajDane(PREFS_NAME);
+			odswiezLayout();
 			return true;
 		}
         return super.onOptionsItemSelected(item);
