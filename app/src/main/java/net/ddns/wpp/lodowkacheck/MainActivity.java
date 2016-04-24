@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -117,7 +118,10 @@ public class MainActivity extends AppCompatActivity
 				dialog.cancel();
 			}
 		});
-		builder.show();
+
+		AlertDialog dialog = builder.create();
+		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+		dialog.show();
 	}
 
     @Override
