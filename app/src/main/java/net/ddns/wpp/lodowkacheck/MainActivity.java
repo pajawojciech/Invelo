@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
     private static final String PREFS_NAME = "invelo";
     private static List<ButtonX> listX;
 	private static LinearLayout l;
+	private static boolean redOnly = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,9 +74,11 @@ public class MainActivity extends AppCompatActivity
 		for (int i = 0; i < listX.size(); i++)
 		{
 			ButtonX x = listX.get(i);
-			l.addView(x);
+			if(!redOnly || x.getStan() == 1)
+			{
+				l.addView(x);
+			}
 		}
-
     }
 
 	private void zapiszDane()
@@ -121,6 +124,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
 	{
         getMenuInflater().inflate(R.menu.menu_main, menu);
+		menu.getItem(1).setChecked(redOnly);
         return true;
     }
 
@@ -137,6 +141,27 @@ public class MainActivity extends AppCompatActivity
 			nowyWpis();
             return true;
         }
+		if(id == R.id.action_redonly)
+		{
+			redOnly = !redOnly;
+			item.setChecked(redOnly);
+			odswiezLayout();
+			return true;
+		}
+		if(id == R.id.action_clear)
+		{
+			for(int i = 0; i < listX.size(); i++)
+			{
+				listX.get(i).resetStan();
+			}
+			return true;
+		}
+		if(id == R.id.action_discard)
+		{
+			listX = wczytajDane(PREFS_NAME);
+			odswiezLayout();
+			return true;
+		}
         return super.onOptionsItemSelected(item);
     }
 

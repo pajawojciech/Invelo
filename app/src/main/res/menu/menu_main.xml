@@ -10,4 +10,17 @@
           android:title="@string/action_new"
           android:orderInCategory="1"
           app:showAsAction="never" />
+    <item android:id="@+id/action_redonly"
+          android:title="@string/action_redonly"
+          android:orderInCategory="2"
+          android:checkable="true"
+          app:showAsAction="never" />
+    <item android:id="@+id/action_clear"
+          android:title="@string/action_clear"
+          android:orderInCategory="3"
+          app:showAsAction="never" />
+    <item android:id="@+id/action_discard"
+          android:title="@string/action_discard"
+          android:orderInCategory="4"
+          app:showAsAction="never" />
 </menu>
