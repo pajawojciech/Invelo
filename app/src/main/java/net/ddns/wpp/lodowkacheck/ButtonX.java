@@ -34,10 +34,10 @@ public class ButtonX extends Button
                 this.setBackgroundColor(Color.LTGRAY);
                 break;
             case 1:
-                this.setBackgroundColor(Color.RED);
+                this.setBackgroundColor(Color.rgb(212, 114, 106));
                 break;
             case 2:
-                this.setBackgroundColor(Color.GREEN);
+                this.setBackgroundColor(Color.rgb(142, 191, 95));
         }
     }
 
