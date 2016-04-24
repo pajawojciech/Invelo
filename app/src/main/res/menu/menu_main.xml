@@ -15,4 +15,8 @@
           android:orderInCategory="2"
           android:checkable="true"
           app:showAsAction="never" />
+    <item android:id="@+id/action_clear"
+          android:title="@string/action_clear"
+          android:orderInCategory="3"
+          app:showAsAction="never" />
 </menu>

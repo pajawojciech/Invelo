@@ -45,4 +45,10 @@ public class ButtonX extends Button
     {
         return stan;
     }
+
+	public void resetStan()
+	{
+		stan = 0;
+		update();
+	}
 }

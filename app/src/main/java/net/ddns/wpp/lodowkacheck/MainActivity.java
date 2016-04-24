@@ -149,6 +149,14 @@ public class MainActivity extends AppCompatActivity
 			odswiezLayout();
 			return true;
 		}
+		if(id == R.id.action_clear)
+		{
+			for(int i = 0; i < listX.size(); i++)
+			{
+				listX.get(i).resetStan();
+			}
+			return true;
+		}
         return super.onOptionsItemSelected(item);
     }
 
