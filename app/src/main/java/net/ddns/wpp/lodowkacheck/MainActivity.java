@@ -21,53 +21,56 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-    private static final String PREFS_NAME = "invelo";
-    private static List<ButtonX> listX;
+	private static final String PREFS_NAME = "invelo";
+	private static final String COUNT = "ilosc";
+	private static final String STATE = "stan";
+	private static final String NAME = "nazwa";
+	private static List<ButtonX> listX;
 	private static LinearLayout l;
 	private static boolean redOnly = false;
 	private static boolean delete = false;
 	private static boolean edit = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	  {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(onClickFab);
+		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+		fab.setOnClickListener(onClickFab);
 
 		if(listX == null)
 		{
-            listX = wczytajDane(PREFS_NAME);
+			listX = wczytajDane(PREFS_NAME);
 		}
 		odswiezLayout();
 	}
 
-    private ArrayList<ButtonX> wczytajDane(String name)
-    {
-        SharedPreferences settings = getSharedPreferences(name, MODE_PRIVATE);
-        ArrayList<ButtonX> lista = new ArrayList<>();
+	private ArrayList<ButtonX> wczytajDane(String name)
+	{
+		SharedPreferences settings = getSharedPreferences(name, MODE_PRIVATE);
+		ArrayList<ButtonX> lista = new ArrayList<>();
 
-        int ilosc = settings.getInt("ilosc", 0);
-        for (int i = 0; i < ilosc; i++)
-        {
-            if (settings.contains("nazwa" + Integer.toString(i)))
-            {
-                ButtonX x = new ButtonX(this,
-						settings.getInt("stan" + Integer.toString(i), 0),
-						settings.getString("nazwa" + Integer.toString(i) , " --- "));
-                x.setOnClickListener(onClickBtn);
-                lista.add(x);
-            }
-        }
-        return lista;
-    }
-    
-    private void odswiezLayout()
-    {
+		int ilosc = settings.getInt(COUNT, 0);
+		for (int i = 0; i < ilosc; i++)
+		{
+			if (settings.contains(NAME + Integer.toString(i)))
+			{
+				ButtonX x = new ButtonX(this,
+						settings.getInt(STATE + Integer.toString(i), 0),
+						settings.getString(NAME + Integer.toString(i) , " --- "));
+				x.setOnClickListener(onClickBtn);
+				lista.add(x);
+			}
+		}
+		return lista;
+	}
+
+	private void odswiezLayout()
+	{
 		if(l != null)
 		{
 			l.removeAllViews();
@@ -82,17 +85,17 @@ public class MainActivity extends AppCompatActivity
 				l.addView(x);
 			}
 		}
-    }
+	}
 
 	private void zapiszDane()
 	{
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt("ilosc", listX.size());
+		editor.putInt(COUNT, listX.size());
 		for(int i = 0;i < listX.size() ; i++)
 		{
-			editor.putInt("stan" + Integer.toString(i), listX.get(i).getStan());
-			editor.putString("nazwa" + Integer.toString(i), listX.get(i).getText().toString());
+			editor.putInt(STATE + Integer.toString(i), listX.get(i).getStan());
+			editor.putString(NAME + Integer.toString(i), listX.get(i).getText().toString());
 		}
 		editor.apply();
 	}
@@ -100,12 +103,12 @@ public class MainActivity extends AppCompatActivity
 	private void nowyWpis()
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Nowy wpis");
+		builder.setTitle(getString(R.string.new_title));
 
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		builder.setView(input);
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				ButtonX x = new ButtonX(getBaseContext(), 0, input.getText().toString());
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity
 				odswiezLayout();
 			}
 		});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
@@ -129,20 +132,19 @@ public class MainActivity extends AppCompatActivity
 	private void edytujWpis(ButtonX bx)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Edytuj wpis");
+		builder.setTitle(getString(R.string.edit_title));
 		final ButtonX buttonX = bx;
 		final EditText input = new EditText(this);
 		input.setText(buttonX.getText());
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		builder.setView(input);
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				buttonX.setText(input.getText());
-				//odswiezLayout();
 			}
 		});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.cancel();
@@ -154,29 +156,29 @@ public class MainActivity extends AppCompatActivity
 		dialog.show();
 	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
 	{
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+		getMenuInflater().inflate(R.menu.menu_main, menu);
 		menu.getItem(1).setChecked(redOnly);
 		menu.getItem(4).setChecked(delete);
 		menu.getItem(5).setChecked(edit);
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
 	{
-        int id = item.getItemId();
-        if (id == R.id.action_settings)
+		int id = item.getItemId();
+		if (id == R.id.action_settings)
 		{
-            return true;
-        }
-        if (id == R.id.action_new)
+			return true;
+		}
+		if (id == R.id.action_new)
 		{
 			nowyWpis();
-            return true;
-        }
+			return true;
+		}
 		if(id == R.id.action_redonly)
 		{
 			redOnly = !redOnly;
@@ -240,7 +242,7 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void onClick(View view)
 		{
-			Snackbar.make(view, "Zapisano, miłego dnia :D", Snackbar.LENGTH_LONG)
+			Snackbar.make(view, getString(R.string.saved), Snackbar.LENGTH_LONG)
 					.setAction("Action", null).show();
 			zapiszDane();
 			odswiezLayout();

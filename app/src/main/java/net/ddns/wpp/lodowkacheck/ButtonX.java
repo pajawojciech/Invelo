@@ -2,6 +2,7 @@ package net.ddns.wpp.lodowkacheck;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.widget.Button;
 
 /**
@@ -9,42 +10,42 @@ import android.widget.Button;
  */
 public class ButtonX extends Button
 {
-    private int stan;
+	private int stan;
 
-    ButtonX(Context c, int _stan, String text)
-    {
-        super(c);
-        setBackgroundColor(Color.LTGRAY);
-        stan = _stan;
-        setText(text);
-        update();
-    }
+	ButtonX(Context c, int _stan, String text)
+	{
+		super(c);
+		setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
+		stan = _stan;
+		setText(text);
+		update();
+	}
 
-    void nextStan()
-    {
-        stan = (stan + 1) % 3;
-        update();
-    }
+	void nextStan()
+	{
+		stan = (stan + 1) % 3;
+		update();
+	}
 
-    private void update()
-    {
-        switch (stan)
-        {
-            case 0:
-                this.setBackgroundColor(Color.LTGRAY);
-                break;
-            case 1:
-                this.setBackgroundColor(Color.rgb(212, 114, 106));
-                break;
-            case 2:
-                this.setBackgroundColor(Color.rgb(142, 191, 95));
-        }
-    }
+	private void update()
+	{
+		switch (stan)
+		{
+			case 0:
+				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
+				break;
+			case 1:
+				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.active));
+				break;
+			case 2:
+				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.inactive));
+		}
+	}
 
-    public int getStan()
-    {
-        return stan;
-    }
+	public int getStan()
+	{
+		return stan;
+	}
 
 	public void resetStan()
 	{

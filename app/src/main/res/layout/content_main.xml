@@ -12,7 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
     tools:context="net.ddns.wpp.lodowkacheck.MainActivity"
-    android:background="#cccccc">
+    android:background="@color/background">
 
        <ScrollView
         android:layout_width="wrap_content"
