@@ -6,4 +6,5 @@
     <string name="action_clear">Wyczyść zaznaczenia</string>
     <string name="action_discard">Porzuć niezapisane zmiany</string>
     <string name="action_delete">Usuwanie wpisów</string>
+    <string name="action_edit">Edycja wpisów</string>
 </resources>

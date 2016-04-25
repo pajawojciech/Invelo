@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
 	private static LinearLayout l;
 	private static boolean redOnly = false;
 	private static boolean delete = false;
+	private static boolean edit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity
 	private void nowyWpis()
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Nowy produkt");
+		builder.setTitle("Nowy wpis");
 
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -125,12 +126,41 @@ public class MainActivity extends AppCompatActivity
 		dialog.show();
 	}
 
+	private void edytujWpis(ButtonX bx)
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Edytuj wpis");
+		final ButtonX buttonX = bx;
+		final EditText input = new EditText(this);
+		input.setText(buttonX.getText());
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(input);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				buttonX.setText(input.getText());
+				//odswiezLayout();
+			}
+		});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+
+		AlertDialog dialog = builder.create();
+		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+		dialog.show();
+	}
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
 	{
         getMenuInflater().inflate(R.menu.menu_main, menu);
 		menu.getItem(1).setChecked(redOnly);
 		menu.getItem(4).setChecked(delete);
+		menu.getItem(5).setChecked(edit);
         return true;
     }
 
@@ -174,8 +204,14 @@ public class MainActivity extends AppCompatActivity
 			item.setChecked(delete);
 			return true;
 		}
-        return super.onOptionsItemSelected(item);
-    }
+		if(id == R.id.action_edit)
+		{
+			edit = !edit;
+			item.setChecked(edit);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	View.OnClickListener onClickBtn = new View.OnClickListener()
 	{
@@ -183,7 +219,11 @@ public class MainActivity extends AppCompatActivity
 		public void onClick(View v)
 		{
 			ButtonX b = (ButtonX)v;
-			if(delete)
+			if(edit)
+			{
+				edytujWpis(b);
+			}
+			else if(delete)
 			{
 				listX.remove(b);
 				odswiezLayout();
