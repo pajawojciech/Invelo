@@ -5,4 +5,5 @@
     <string name="action_redonly">Pokaż tylko czerwone</string>
     <string name="action_clear">Wyczyść zaznaczenia</string>
     <string name="action_discard">Porzuć niezapisane zmiany</string>
+    <string name="action_delete">Usuwanie wpisów</string>
 </resources>

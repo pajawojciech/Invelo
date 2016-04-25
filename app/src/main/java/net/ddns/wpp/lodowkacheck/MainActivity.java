@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     private static List<ButtonX> listX;
 	private static LinearLayout l;
 	private static boolean redOnly = false;
+	private static boolean delete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity
 	{
         getMenuInflater().inflate(R.menu.menu_main, menu);
 		menu.getItem(1).setChecked(redOnly);
+		menu.getItem(4).setChecked(delete);
         return true;
     }
 
@@ -166,6 +168,12 @@ public class MainActivity extends AppCompatActivity
 			odswiezLayout();
 			return true;
 		}
+		if(id == R.id.action_delete)
+		{
+			delete = !delete;
+			item.setChecked(delete);
+			return true;
+		}
         return super.onOptionsItemSelected(item);
     }
 
@@ -175,7 +183,15 @@ public class MainActivity extends AppCompatActivity
 		public void onClick(View v)
 		{
 			ButtonX b = (ButtonX)v;
-			b.nextStan();
+			if(delete)
+			{
+				listX.remove(b);
+				odswiezLayout();
+			}
+			else
+			{
+				b.nextStan();
+			}
 		}
 	};
 
