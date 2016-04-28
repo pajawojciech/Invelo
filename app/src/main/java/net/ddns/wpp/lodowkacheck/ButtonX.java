@@ -32,7 +32,7 @@ public class ButtonX extends Button
 		switch (stan)
 		{
 			case 0:
-				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
+				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.empty));
 				break;
 			case 1:
 				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.active));
