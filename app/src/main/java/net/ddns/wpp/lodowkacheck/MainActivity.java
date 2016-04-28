@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity
 			if(!redOnly || x.getStan() == 1)
 			{
 				l.addView(x);
+				l.addView(new TextView(this));
 			}
 		}
 	}

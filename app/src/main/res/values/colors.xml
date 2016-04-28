@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#990E5342</color>
     <color name="colorAccent">#99458A79</color>
     <color name="background">@android:color/transparent</color>
-    <color name="active">#77d4726a</color>
-    <color name="inactive">#778ebf5f</color>
-    <color name="empty">#44ffffff</color>
+    <color name="active">#d4726a</color>
+    <color name="activet">#77d4726a</color>
+    <color name="inactive">#8ebf5f</color>
+    <color name="inactivet">#778ebf5f</color>
+    <color name="empty">#ffffff</color>
+    <color name="emptyt">#44ffffff</color>
 </resources>
