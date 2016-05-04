@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -174,6 +175,11 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 		if (id == R.id.action_settings)
 		{
+			Toast.makeText(MainActivity.this, "Nie ma ustawień, HOHOHO xD",Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, "hihi",Toast.LENGTH_SHORT).show();
+			Toast.makeText(MainActivity.this, "Przychodzi informatyk do lekarza:",Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, " - Panie doktorze, chyba nie działa mi wątroba.",Toast.LENGTH_LONG).show();
+			Toast.makeText(MainActivity.this, " - Dziwne, u mnie działa.",Toast.LENGTH_LONG).show();
 			return true;
 		}
 		if (id == R.id.action_new)
