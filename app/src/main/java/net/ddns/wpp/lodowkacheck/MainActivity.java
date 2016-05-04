@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
 	private static List<ButtonX> listX;
 	private static LinearLayout l;
 	private static boolean redOnly = false;
+	private static int moveIndex = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -209,7 +211,24 @@ public class MainActivity extends AppCompatActivity
 		{
 			ButtonX b = (ButtonX)v;
 			{
-				b.nextStan();
+				if(moveIndex != -1)
+				{
+					int place = listX.indexOf(b);
+					if(moveIndex < place)
+					{
+						Collections.rotate(listX.subList(moveIndex, place + 1), -1);
+					}
+					else
+					{
+						Collections.rotate(listX.subList(place, moveIndex + 1), 1);
+					}
+					odswiezLayout();
+					moveIndex = -1;
+				}
+				else
+				{
+					b.nextStan();
+				}
 			}
 		}
 	};
@@ -219,55 +238,59 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public boolean onLongClick(View v)
 		{
-			ButtonX b = (ButtonX)v;
-
 			final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-			final ButtonX buttonX = b;
+			final ButtonX buttonX = (ButtonX)v;
 
 			final LinearLayout ll = new LinearLayout(MainActivity.this);
+			final Button editBtn = new Button(getApplicationContext());
+			final Button deleteBtn = new Button(getApplicationContext());
+			final Button moveBtn = new Button(getApplicationContext());
+
 			ll.setOrientation(LinearLayout.VERTICAL);
 
-			final Button editBtn = new Button(getApplicationContext());
 			editBtn.setText(getString(R.string.action_edit));
+			deleteBtn.setText(getString(R.string.action_delete));
+			moveBtn.setText(getString(R.string.action_move));
+
+			ll.addView(editBtn);
+			ll.addView(deleteBtn);
+			ll.addView(moveBtn);
+
+			builder.setView(ll);
+
+			final AlertDialog dialog = builder.create();
+			dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+			dialog.show();
+
 			editBtn.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
 					edytujWpis(buttonX);
+					dialog.dismiss();
 				}
 			});
-			ll.addView(editBtn);
-
-			final Button deleteBtn = new Button(getApplicationContext());
-			deleteBtn.setText(getString(R.string.action_delete));
 			deleteBtn.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
 					listX.remove(buttonX);
+					dialog.dismiss();
 					odswiezLayout();
 				}
 			});
-			ll.addView(deleteBtn);
-
-			final Button moveBtn = new Button(getApplicationContext());
-			moveBtn.setText(getString(R.string.action_move));
 			moveBtn.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-
+					moveIndex = listX.indexOf(buttonX);
+					dialog.dismiss();
+					Snackbar.make(MainActivity.l, getString(R.string.move), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 				}
 			});
-			ll.addView(moveBtn);
-
-			builder.setView(ll);
-			AlertDialog dialog = builder.create();
-			dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-			dialog.show();
 
 			return true;
 		}
