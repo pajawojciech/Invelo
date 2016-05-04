@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity
 			if(!redOnly || x.getStan() == 1)
 			{
 				l.addView(x);
-				l.addView(new TextView(this));
 			}
 		}
 	}

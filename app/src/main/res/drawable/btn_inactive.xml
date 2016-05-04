@@ -7,7 +7,7 @@
         android:color="@color/inactivet"
         />
     <stroke
-        android:width="3dp"
-        android:color="@color/inactive"
+        android:width="5dp"
+        android:color="@android:color/transparent"
         />
 </shape> 
