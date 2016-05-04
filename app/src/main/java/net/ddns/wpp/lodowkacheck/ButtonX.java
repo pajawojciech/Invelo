@@ -2,7 +2,6 @@ package net.ddns.wpp.lodowkacheck;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.widget.Button;
 
 /**
@@ -15,7 +14,6 @@ public class ButtonX extends Button
 	ButtonX(Context c, int _stan, String text)
 	{
 		super(c);
-		setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
 		stan = _stan;
 		setText(text);
 		update();
@@ -32,14 +30,16 @@ public class ButtonX extends Button
 		switch (stan)
 		{
 			case 0:
-				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
+				setBackground(getResources().getDrawable(R.drawable.btn_empty));
 				break;
 			case 1:
-				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.active));
+				setBackground(getResources().getDrawable(R.drawable.btn_active));
 				break;
 			case 2:
-				this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.inactive));
+				setBackground(getResources().getDrawable(R.drawable.btn_inactive));
 		}
+		setShadowLayer(25, 0, 0, Color.WHITE);
+
 	}
 
 	public int getStan()
