@@ -5,11 +5,13 @@
     <string name="action_redonly">Pokaż tylko czerwone</string>
     <string name="action_clear">Wyczyść zaznaczenia</string>
     <string name="action_discard">Porzuć niezapisane zmiany</string>
-    <string name="action_delete">Usuwanie wpisów</string>
-    <string name="action_edit">Edycja wpisów</string>
+    <string name="action_delete">Usuń</string>
+    <string name="action_edit">Edytuj</string>
+    <string name="action_move">Przenieś</string>
     <string name="new_title">Nowy wpis</string>
     <string name="ok">Zatwierdź</string>
     <string name="cancel">Anuluj</string>
     <string name="edit_title">Edytuj wpis</string>
     <string name="saved">Zapisano, miłego dnia :D</string>
+    <string name="move">Gdzie przenieść wpis?</string>
 </resources>
