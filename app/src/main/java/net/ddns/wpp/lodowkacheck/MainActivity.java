@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity
 	private static List<ButtonX> listX;
 	private static LinearLayout l;
 	private static boolean redOnly = false;
-	private static boolean delete = false;
-	private static boolean edit = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -63,6 +62,7 @@ public class MainActivity extends AppCompatActivity
 						settings.getInt(STATE + Integer.toString(i), 0),
 						settings.getString(NAME + Integer.toString(i) , " --- "));
 				x.setOnClickListener(onClickBtn);
+				x.setOnLongClickListener(onLongClickBtn);
 				lista.add(x);
 			}
 		}
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity
 			public void onClick(DialogInterface dialog, int which) {
 				ButtonX x = new ButtonX(getBaseContext(), 0, input.getText().toString());
 				x.setOnClickListener(onClickBtn);
+				x.setOnLongClickListener(onLongClickBtn);
 				listX.add(x);
 				odswiezLayout();
 			}
@@ -161,8 +162,6 @@ public class MainActivity extends AppCompatActivity
 	{
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		menu.getItem(1).setChecked(redOnly);
-		menu.getItem(4).setChecked(delete);
-		menu.getItem(5).setChecked(edit);
 		return true;
 	}
 
@@ -200,18 +199,6 @@ public class MainActivity extends AppCompatActivity
 			odswiezLayout();
 			return true;
 		}
-		if(id == R.id.action_delete)
-		{
-			delete = !delete;
-			item.setChecked(delete);
-			return true;
-		}
-		if(id == R.id.action_edit)
-		{
-			edit = !edit;
-			item.setChecked(edit);
-			return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -221,19 +208,68 @@ public class MainActivity extends AppCompatActivity
 		public void onClick(View v)
 		{
 			ButtonX b = (ButtonX)v;
-			if(edit)
-			{
-				edytujWpis(b);
-			}
-			else if(delete)
-			{
-				listX.remove(b);
-				odswiezLayout();
-			}
-			else
 			{
 				b.nextStan();
 			}
+		}
+	};
+
+	View.OnLongClickListener onLongClickBtn = new View.OnLongClickListener()
+	{
+		@Override
+		public boolean onLongClick(View v)
+		{
+			ButtonX b = (ButtonX)v;
+
+			final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+			final ButtonX buttonX = b;
+
+			final LinearLayout ll = new LinearLayout(MainActivity.this);
+			ll.setOrientation(LinearLayout.VERTICAL);
+
+			final Button editBtn = new Button(getApplicationContext());
+			editBtn.setText(getString(R.string.action_edit));
+			editBtn.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					edytujWpis(buttonX);
+				}
+			});
+			ll.addView(editBtn);
+
+			final Button deleteBtn = new Button(getApplicationContext());
+			deleteBtn.setText(getString(R.string.action_delete));
+			deleteBtn.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					listX.remove(buttonX);
+					odswiezLayout();
+				}
+			});
+			ll.addView(deleteBtn);
+
+			final Button moveBtn = new Button(getApplicationContext());
+			moveBtn.setText(getString(R.string.action_move));
+			moveBtn.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+
+				}
+			});
+			ll.addView(moveBtn);
+
+			builder.setView(ll);
+			AlertDialog dialog = builder.create();
+			dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+			dialog.show();
+
+			return true;
 		}
 	};
 
